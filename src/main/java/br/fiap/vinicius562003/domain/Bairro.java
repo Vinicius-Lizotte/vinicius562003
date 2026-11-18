@@ -1,0 +1,27 @@
+package br.fiap.vinicius562003.domain;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "GS147_BAIRRO")
+@Getter
+@Setter
+@NoArgsConstructor
+public class Bairro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nome", nullable = false, length = 80)
+    private String nome;
+
+    @Column(name = "zona", nullable = false, length = 10)
+    private String zona;
+
+    @Column(name = "possui_piscinao")
+    private Boolean possuiPiscinao;
+}

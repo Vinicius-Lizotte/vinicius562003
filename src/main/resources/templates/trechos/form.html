@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Trecho')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo estreito">
+    <h1 th:text="${trecho.id == null} ? 'Novo trecho' : 'Editar trecho'">Novo trecho</h1>
+
+    <div th:replace="~{fragments :: mensagens}"></div>
+
+    <form class="formulario" th:action="@{/trechos/salvar}" th:object="${trecho}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <label for="logradouro">Logradouro</label>
+        <input type="text" id="logradouro" th:field="*{logradouro}" maxlength="120"
+               th:classappend="${#fields.hasErrors('logradouro')} ? 'invalido'">
+        <div class="erro-campo" th:if="${#fields.hasErrors('logradouro')}" th:errors="*{logradouro}"></div>
+
+        <label for="bairroId">Bairro</label>
+        <select id="bairroId" th:field="*{bairroId}" th:classappend="${#fields.hasErrors('bairroId')} ? 'invalido'">
+            <option value="">Selecione...</option>
+            <option th:each="b : ${bairros}" th:value="${b.id}" th:text="${b.nome}"></option>
+        </select>
+        <div class="erro-campo" th:if="${#fields.hasErrors('bairroId')}" th:errors="*{bairroId}"></div>
+
+        <label for="tipoCalcada">Tipo de calçada</label>
+        <select id="tipoCalcada" th:field="*{tipoCalcada}" th:classappend="${#fields.hasErrors('tipoCalcada')} ? 'invalido'">
+            <option value="">Selecione...</option>
+            <option th:each="tc : ${tiposCalcada}" th:value="${tc}" th:text="${tc}"></option>
+        </select>
+        <div class="erro-campo" th:if="${#fields.hasErrors('tipoCalcada')}" th:errors="*{tipoCalcada}"></div>
+
+        <label for="altitude">Altitude (m)</label>
+        <input type="number" id="altitude" th:field="*{altitude}"
+               th:classappend="${#fields.hasErrors('altitude')} ? 'invalido'">
+        <div class="erro-campo" th:if="${#fields.hasErrors('altitude')}" th:errors="*{altitude}"></div>
+
+        <div class="botoes">
+            <button type="submit" class="botao">Salvar</button>
+            <a class="botao botao-sec" th:href="@{/trechos}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

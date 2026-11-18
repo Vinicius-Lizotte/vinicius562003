@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Bairro')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo estreito">
+    <h1 th:text="${bairro.id == null} ? 'Novo bairro' : 'Editar bairro'">Novo bairro</h1>
+
+    <div th:replace="~{fragments :: mensagens}"></div>
+
+    <form class="formulario" th:action="@{/bairros/salvar}" th:object="${bairro}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" th:field="*{nome}" maxlength="80"
+               th:classappend="${#fields.hasErrors('nome')} ? 'invalido'">
+        <div class="erro-campo" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+
+        <label for="zona">Zona</label>
+        <select id="zona" th:field="*{zona}" th:classappend="${#fields.hasErrors('zona')} ? 'invalido'">
+            <option value="">Selecione...</option>
+            <option th:each="z : ${zonas}" th:value="${z}" th:text="${z}"></option>
+        </select>
+        <div class="erro-campo" th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}"></div>
+
+        <label class="checkbox">
+            <input type="checkbox" th:field="*{possuiPiscinao}">
+            Possui piscinão
+        </label>
+        <div class="erro-campo" th:if="${#fields.hasErrors('possuiPiscinao')}" th:errors="*{possuiPiscinao}"></div>
+
+        <div class="botoes">
+            <button type="submit" class="botao">Salvar</button>
+            <a class="botao botao-sec" th:href="@{/bairros}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

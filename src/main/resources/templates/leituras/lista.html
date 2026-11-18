@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Leituras')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo">
+    <div class="titulo-pagina">
+        <h1>Leituras <small>da mais recente para a mais antiga</small></h1>
+        <a class="botao" th:href="@{/leituras/novo}">+ Nova leitura</a>
+    </div>
+
+    <div th:replace="~{fragments :: mensagens}"></div>
+
+    <table class="tabela">
+        <thead>
+        <tr>
+            <th>Data e hora</th>
+            <th>Logradouro</th>
+            <th>Lâmina (cm)</th>
+            <th>Status</th>
+            <th class="acoes">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(leituras)}">
+            <td colspan="5" class="vazio">Nenhuma leitura registrada.</td>
+        </tr>
+        <tr th:each="l : ${leituras}">
+            <td th:text="${#temporals.format(l.dataHora, 'dd/MM/yyyy HH:mm')}">01/11/2026 17:20</td>
+            <td th:text="${l.trechoDescricao}">Rua Alta (Vila Esperança)</td>
+            <td th:text="${l.laminaCm}">5</td>
+            <td><span class="status" th:classappend="'status-' + ${l.status}" th:text="${l.status}">NORMAL</span></td>
+            <td class="acoes">
+                <a class="botao botao-sec" th:href="@{/leituras/{id}/editar(id=${l.id})}">Editar</a>
+                <form th:action="@{/leituras/{id}/excluir(id=${l.id})}" method="post"
+                      onsubmit="return confirm('Excluir esta leitura?');">
+                    <button type="submit" class="botao botao-perigo">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Leitura')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo estreito">
+    <h1 th:text="${leitura.id == null} ? 'Nova leitura' : 'Editar leitura'">Nova leitura</h1>
+    <p class="dica">O status (NORMAL, ATENCAO ou ALERTA) é calculado pelo sistema a partir da lâmina.</p>
+
+    <div th:replace="~{fragments :: mensagens}"></div>
+
+    <form class="formulario" th:action="@{/leituras/salvar}" th:object="${leitura}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <label for="trechoId">Trecho</label>
+        <select id="trechoId" th:field="*{trechoId}" th:classappend="${#fields.hasErrors('trechoId')} ? 'invalido'">
+            <option value="">Selecione...</option>
+            <option th:each="t : ${trechos}" th:value="${t.id}"
+                    th:text="${t.logradouro} + ' (' + ${t.bairroNome} + ')'"></option>
+        </select>
+        <div class="erro-campo" th:if="${#fields.hasErrors('trechoId')}" th:errors="*{trechoId}"></div>
+
+        <label for="dataHora">Data e hora</label>
+        <input type="datetime-local" id="dataHora" th:field="*{dataHora}"
+               th:classappend="${#fields.hasErrors('dataHora')} ? 'invalido'">
+        <div class="erro-campo" th:if="${#fields.hasErrors('dataHora')}" th:errors="*{dataHora}"></div>
+
+        <label for="laminaCm">Lâmina (cm)</label>
+        <input type="number" id="laminaCm" th:field="*{laminaCm}"
+               th:classappend="${#fields.hasErrors('laminaCm')} ? 'invalido'">
+        <div class="erro-campo" th:if="${#fields.hasErrors('laminaCm')}" th:errors="*{laminaCm}"></div>
+
+        <div class="botoes">
+            <button type="submit" class="botao">Salvar</button>
+            <a class="botao botao-sec" th:href="@{/leituras}">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

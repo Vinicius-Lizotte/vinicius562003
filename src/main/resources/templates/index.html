@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Início')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo">
+    <section class="hero">
+        <h1>Monitoramento de alagamentos</h1>
+        <p>Cadastre bairros e trechos, registre as leituras dos sensores e acompanhe o painel de cada bairro.</p>
+        <ul class="faixas">
+            <li><span class="status status-NORMAL">NORMAL</span> lâmina abaixo de 8 cm</li>
+            <li><span class="status status-ATENCAO">ATENCAO</span> de 8 cm até 15 cm</li>
+            <li><span class="status status-ALERTA">ALERTA</span> 16 cm ou mais</li>
+        </ul>
+    </section>
+
+    <section class="atalhos">
+        <a class="cartao" th:href="@{/bairros}">
+            <h2>Bairros</h2>
+            <p>Cadastro e painel por bairro</p>
+        </a>
+        <a class="cartao" th:href="@{/trechos}">
+            <h2>Trechos</h2>
+            <p>Ruas monitoradas em cada bairro</p>
+        </a>
+        <a class="cartao" th:href="@{/leituras}">
+            <h2>Leituras</h2>
+            <p>Lâmina d'água medida pelos sensores</p>
+        </a>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Painel do bairro')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo">
+    <div class="titulo-pagina">
+        <h1>Painel · <span th:text="${bairroNome}">Vila Esperança</span></h1>
+        <a class="botao botao-sec" th:href="@{/bairros}">Voltar</a>
+    </div>
+
+    <section class="contagens">
+        <div class="contador c-NORMAL">
+            <strong th:text="${qtdNormal}">0</strong>
+            <span>NORMAL</span>
+        </div>
+        <div class="contador c-ATENCAO">
+            <strong th:text="${qtdAtencao}">0</strong>
+            <span>ATENCAO</span>
+        </div>
+        <div class="contador c-ALERTA">
+            <strong th:text="${qtdAlerta}">0</strong>
+            <span>ALERTA</span>
+        </div>
+    </section>
+
+    <table class="tabela">
+        <thead>
+        <tr>
+            <th>Logradouro</th>
+            <th>Tipo de calçada</th>
+            <th>Altitude (m)</th>
+            <th>Última lâmina (cm)</th>
+            <th>Último status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(itens)}">
+            <td colspan="5" class="vazio">Este bairro ainda não tem trechos.</td>
+        </tr>
+        <tr th:each="i : ${itens}">
+            <td th:text="${i.logradouro}">Rua Alta</td>
+            <td th:text="${i.tipoCalcada}">Regular</td>
+            <td th:text="${i.altitude}">755</td>
+            <td th:text="${i.ultimaLamina} ?: '—'">5</td>
+            <td>
+                <span th:if="${i.ultimoStatus}" class="status"
+                      th:classappend="'status-' + ${i.ultimoStatus}" th:text="${i.ultimoStatus}">NORMAL</span>
+                <span th:unless="${i.ultimoStatus}" class="sem-leitura">sem leitura</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>

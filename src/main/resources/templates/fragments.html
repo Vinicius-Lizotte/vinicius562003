@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' · Cidade em Dia de Chuva'">Cidade em Dia de Chuva</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:fragment="topo" class="topo">
+    <a class="marca" th:href="@{/}">
+        <span class="gota" aria-hidden="true"></span>
+        <span>Cidade em Dia de Chuva <small>GS147</small></span>
+    </a>
+    <nav>
+        <a th:href="@{/bairros}">Bairros</a>
+        <a th:href="@{/trechos}">Trechos</a>
+        <a th:href="@{/leituras}">Leituras</a>
+    </nav>
+</header>
+
+<div th:fragment="mensagens">
+    <div class="aviso aviso-erro" th:if="${erro}" th:text="${erro}"></div>
+    <div class="aviso aviso-ok" th:if="${sucesso}" th:text="${sucesso}"></div>
+</div>
+
+<footer th:fragment="rodape" class="rodape">
+    Miguel 556501 · Guilherme 564643 · Vinicius 562003 — RM da equipe 1683147 · L = 16 cm
+</footer>
+
+</body>
+</html>

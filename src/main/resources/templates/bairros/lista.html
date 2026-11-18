@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Bairros')}"></head>
+<body>
+<header th:replace="~{fragments :: topo}"></header>
+
+<main class="conteudo">
+    <div class="titulo-pagina">
+        <h1>Bairros</h1>
+        <a class="botao" th:href="@{/bairros/novo}">+ Novo bairro</a>
+    </div>
+
+    <div th:replace="~{fragments :: mensagens}"></div>
+
+    <table class="tabela">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Zona</th>
+            <th>Possui piscinão</th>
+            <th class="acoes">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(bairros)}">
+            <td colspan="4" class="vazio">Nenhum bairro cadastrado.</td>
+        </tr>
+        <tr th:each="b : ${bairros}">
+            <td th:text="${b.nome}">Vila Esperança</td>
+            <td th:text="${b.zona}">Leste</td>
+            <td th:text="${b.possuiPiscinao} ? 'Sim' : 'Não'">Não</td>
+            <td class="acoes">
+                <a class="botao botao-sec" th:href="@{/bairros/{id}/editar(id=${b.id})}">Editar</a>
+                <form th:action="@{/bairros/{id}/excluir(id=${b.id})}" method="post"
+                      onsubmit="return confirm('Excluir este bairro?');">
+                    <button type="submit" class="botao botao-perigo">Excluir</button>
+                </form>
+                <a class="botao" th:href="@{/bairros/{id}/painel(id=${b.id})}">Painel</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: rodape}"></footer>
+</body>
+</html>
